@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:BookReader"
+             xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:converter="clr-namespace:BookReader.Converter;assembly=BookReader"
+             x:Class="BookReader.View.MainPage"
+             Title="阅读器">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:InfoConverter x:Key="InfoConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <iconize:IconToolbarItem Command="{Binding SearchCommand}" Icon="fa-search" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ListView x:Name="BookList" ItemsSource="{Binding BookInfoEntities}"  SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal">
+                            <forms:CachedImage DownsampleToViewSize="true" Source="{Binding ConverPath}" />
+                            <StackLayout Orientation="Vertical">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding BookName}" FontAttributes="Bold"></Label>
+                                    <iconize:IconLabel FontSize="Small" Text="fa-user-circle"></iconize:IconLabel>
+                                    <Label Text="{Binding Author}"></Label>
+                                </StackLayout>
+                                <Label Text="{Binding LastReaded, Converter={StaticResource InfoConverter},ConverterParameter=阅读}"></Label>
+                                <Label Text="{Binding LastChapter, Converter={StaticResource InfoConverter},ConverterParameter=最新}"></Label>
+                                <Label Text="{Binding LastModify, Converter={StaticResource InfoConverter},ConverterParameter=阅读}"></Label>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
+    
+
+</ContentPage>
