@@ -55,14 +55,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xam.FormsPlugin.Iconize">
-      <Version>1.0.10</Version>
-    </PackageReference>
     <PackageReference Include="Xam.Plugin.Iconize">
-      <Version>1.0.10</Version>
+      <Version>2.0.0.37-beta</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugin.Iconize.FontAwesome">
-      <Version>1.0.10</Version>
+      <Version>2.0.0.37-beta</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugins.XamJam.Screen">
       <Version>1.0.7</Version>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using BookReader.ViewModel;
-using FormsPlugin.Iconize;
+using Plugin.Iconize;
 using Xamarin.Forms;
 using Xamvvm;
 

@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xam.FormsPlugin.Iconize" Version="1.0.10" />
-    <PackageReference Include="Xam.Plugin.Iconize" Version="1.0.10" />
+    <PackageReference Include="Xam.Plugin.Iconize" Version="2.0.0.37-beta" />
     <PackageReference Include="Xam.Plugins.XamJam.Screen" Version="1.0.7" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.3.4" />
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />

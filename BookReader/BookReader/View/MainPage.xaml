@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BookReader"
-             xmlns:iconize="clr-namespace:FormsPlugin.Iconize;assembly=FormsPlugin.Iconize"
+             xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:converter="clr-namespace:BookReader.Converter;assembly=BookReader"
              x:Class="BookReader.View.MainPage"
@@ -16,7 +16,7 @@
         <iconize:IconToolbarItem Command="{Binding SearchCommand}" Icon="fa-search" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <ListView x:Name="BookList" ItemsSource="{Binding BookInfoEntities}"  SeparatorVisibility="None">
+        <ListView x:Name="BookList" ItemsSource="{Binding BookInfoEntities}"  SeparatorVisibility="None" RowHeight="100">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -30,7 +30,7 @@
                                 </StackLayout>
                                 <Label Text="{Binding LastReaded, Converter={StaticResource InfoConverter},ConverterParameter=阅读}"></Label>
                                 <Label Text="{Binding LastChapter, Converter={StaticResource InfoConverter},ConverterParameter=最新}"></Label>
-                                <Label Text="{Binding LastModify, Converter={StaticResource InfoConverter},ConverterParameter=阅读}"></Label>
+                                <Label Text="{Binding LastModify, Converter={StaticResource InfoConverter},ConverterParameter=更新}"></Label>
                             </StackLayout>
                         </StackLayout>
                     </ViewCell>

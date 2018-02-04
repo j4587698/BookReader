@@ -7,8 +7,6 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using FFImageLoading.Forms.Droid;
-using FormsPlugin.Iconize.Droid;
-
 namespace BookReader.Droid
 {
     [Activity(Label = "BookReader", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
@@ -25,7 +23,7 @@ namespace BookReader.Droid
             CachedImageRenderer.Init(enableFastRenderer: true);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            IconControls.Init(Resource.Id.toolbar, Resource.Id.tabs);
+            Plugin.Iconize.Iconize.Init(Resource.Id.toolbar, Resource.Id.tabs);
             ToolbarResource = Resource.Layout.toolbar;
             TabLayoutResource = Resource.Layout.tabs;
             LoadApplication(new App());
