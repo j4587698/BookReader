@@ -21,12 +21,12 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Orientation="Horizontal">
-                            <forms:CachedImage DownsampleToViewSize="true" Source="{Binding ConverPath}" />
+                            <forms:CachedImage Source="{Binding ConverPath}"/>
                             <StackLayout Orientation="Vertical">
                                 <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding BookName}" FontAttributes="Bold"></Label>
-                                    <iconize:IconLabel FontSize="Small" Text="fa-user-circle"></iconize:IconLabel>
-                                    <Label Text="{Binding Author}"></Label>
+                                    <Label Text="{Binding BookName}" FontAttributes="Bold" FontSize="Large"></Label>
+                                    <iconize:IconLabel FontSize="Small" Text="fa-user-circle" VerticalTextAlignment="Center"></iconize:IconLabel>
+                                    <Label Text="{Binding Author}" VerticalTextAlignment="Center"></Label>
                                 </StackLayout>
                                 <Label Text="{Binding LastReaded, Converter={StaticResource InfoConverter},ConverterParameter=阅读}"></Label>
                                 <Label Text="{Binding LastChapter, Converter={StaticResource InfoConverter},ConverterParameter=最新}"></Label>
