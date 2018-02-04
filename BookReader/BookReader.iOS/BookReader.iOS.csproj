@@ -131,4 +131,7 @@
       <Name>BookReader</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\loading.gif" />
+  </ItemGroup>
 </Project>
