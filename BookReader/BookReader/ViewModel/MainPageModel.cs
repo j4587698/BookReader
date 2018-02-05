@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
+using BookReader.DB;
 using BookReader.Entity;
 using Xamarin.Forms;
 using Xamvvm;
@@ -14,23 +15,25 @@ namespace BookReader.ViewModel
 
         public MainPageModel()
         {
-            SearchCommand = new BaseCommand((arg) =>
-            {
-
-            });
-            //测试数据
-            BookInfoEntities = new ObservableCollection<BookInfoEntity>()
-            {
-                new BookInfoEntity()
+            SearchCommand = new BaseCommand(async (arg) =>
                 {
-                    Author = "JX",
-                    BookName = "测试图书",
-                    ConverPath = "https://img4.km.com/bookimg/public/images/cover/c4ca/58bae2611976c.jpg",
-                    LastChapter = "第十五章 测试章节",
-                    LastModify = DateTime.Now,
-                    LastReaded = "第十五章 测试章节"
-                }
-            };
+                    await this.PushPageAsync(this.GetPageFromCache<SearchPageModel>());
+                });
+
+            BookInfoEntities = new ObservableCollection<BookInfoEntity>(BookManager.GetAllBookInfos());
+            //测试数据
+            //BookInfoEntities = new ObservableCollection<BookInfoEntity>()
+            //{
+            //    new BookInfoEntity()
+            //    {
+            //        Author = "JX",
+            //        BookName = "测试图书",
+            //        ConverPath = "https://img4.km.com/bookimg/public/images/cover/c4ca/58bae2611976c.jpg",
+            //        LastChapter = "第十五章 测试章节",
+            //        LastModify = DateTime.Now,
+            //        LastReaded = "第十五章 测试章节"
+            //    }
+            //};
         }
         public ICommand SearchCommand
         {

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+             xmlns:xamvvm="clr-namespace:Xamvvm;assembly=Xamvvm.Forms"
+             x:Class="BookReader.View.SearchPage">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackLayout Orientation="Horizontal" VerticalOptions="Start" >
+                <iconize:IconLabel Text="fa-chevron-left" FontSize="Large" VerticalTextAlignment="Center" Margin="15, 0,15,0">
+                    <iconize:IconLabel.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding BackCommand}"></TapGestureRecognizer>
+                    </iconize:IconLabel.GestureRecognizers>
+                </iconize:IconLabel>
+                <Entry HorizontalOptions="FillAndExpand">
+                    <Entry.Behaviors>
+                        <xamvvm:BaseEventToCommandBehavior EventName="TextChanged" Command="{Binding SearchTextChangedCommand}"></xamvvm:BaseEventToCommandBehavior>
+                    </Entry.Behaviors>
+                </Entry>
+                <iconize:IconLabel Text="fa-search" FontSize="Large" VerticalTextAlignment="Center" Margin="15, 0,15,0">
+                    <iconize:IconLabel.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SearchCommand}"></TapGestureRecognizer>
+                    </iconize:IconLabel.GestureRecognizers>
+                </iconize:IconLabel>
+            </StackLayout>
+            <ListView Grid.Row="1" ItemsSource="SearchList" IsVisible="{Binding StartSearch}">
+                <ListView.Behaviors>
+                    <xamvvm:BaseEventToCommandBehavior EventName="ItemTapped" Command="{Binding SearchListTappedCommand}"></xamvvm:BaseEventToCommandBehavior>
+                </ListView.Behaviors>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <iconize:IconLabel Text="fa-search" Margin="15, 0, 15, 0"></iconize:IconLabel>
+                                <Label Text="{Binding .}"></Label>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
