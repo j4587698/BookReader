@@ -3,20 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
              xmlns:xamvvm="clr-namespace:Xamvvm;assembly=Xamvvm.Forms"
+             xmlns:converter="clr-namespace:BookReader.Converter;assembly=BookReader"
              x:Class="BookReader.View.SearchPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:NoRecordConverter x:Key="NoRecordConverter"></converter:NoRecordConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
-            <StackLayout Orientation="Horizontal" VerticalOptions="Start" >
+        <StackLayout Orientation="Vertical">
+            <StackLayout Orientation="Horizontal">
                 <iconize:IconLabel Text="fa-chevron-left" FontSize="Large" VerticalTextAlignment="Center" Margin="15, 0,15,0">
                     <iconize:IconLabel.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding BackCommand}"></TapGestureRecognizer>
                     </iconize:IconLabel.GestureRecognizers>
                 </iconize:IconLabel>
-                <Entry HorizontalOptions="FillAndExpand">
+                <Entry HorizontalOptions="FillAndExpand" Text="{Binding SearchText, Mode=TwoWay}">
                     <Entry.Behaviors>
                         <xamvvm:BaseEventToCommandBehavior EventName="TextChanged" Command="{Binding SearchTextChangedCommand}"></xamvvm:BaseEventToCommandBehavior>
                     </Entry.Behaviors>
@@ -27,21 +29,34 @@
                     </iconize:IconLabel.GestureRecognizers>
                 </iconize:IconLabel>
             </StackLayout>
-            <ListView Grid.Row="1" ItemsSource="SearchList" IsVisible="{Binding StartSearch}">
-                <ListView.Behaviors>
-                    <xamvvm:BaseEventToCommandBehavior EventName="ItemTapped" Command="{Binding SearchListTappedCommand}"></xamvvm:BaseEventToCommandBehavior>
-                </ListView.Behaviors>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal">
-                                <iconize:IconLabel Text="fa-search" Margin="15, 0, 15, 0"></iconize:IconLabel>
-                                <Label Text="{Binding .}"></Label>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+            <Grid>
+                <ListView ItemsSource="{Binding SearchList}" SeparatorVisibility="None">
+                    <ListView.Behaviors>
+                        <xamvvm:BaseEventToCommandBehavior EventName="ItemTapped" Command="{Binding SearchListTappedCommand}"></xamvvm:BaseEventToCommandBehavior>
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <iconize:IconLabel Text="fa-search" Margin="15, 0, 15, 0" FontSize="Large" VerticalTextAlignment="Center"></iconize:IconLabel>
+                                    <Label Text="{Binding .}" FontSize="Large" VerticalTextAlignment="Center"></Label>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Grid IsVisible="{Binding SearchList, Converter={StaticResource NoRecordConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="10*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label Text="大家都在看" FontAttributes="Bold"></Label>
+                    <Label Text="搜索历史" FontAttributes="Bold" Grid.Row="2"></Label>
+                </Grid>
+            </Grid>
+            
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

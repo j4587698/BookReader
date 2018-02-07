@@ -1,11 +1,11 @@
 ﻿namespace BookReader.Entity
 {
-    public class SettingsEntity : IBaseEntity
+    public class SettingsEntity<T> : IBaseEntity
     {
         public int Id { get; set; }
 
         public string Key { get; set; }
 
-        public object Value { get; set; }
+        public T Value { get; set; }
     }
 }

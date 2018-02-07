@@ -12,9 +12,9 @@ namespace BookReader.DB
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static object Get(string key)
+        public static object Get<T>(string key)
         {
-            return LiteDBHelper.Instance.GetAllData<SettingsEntity>(SettingsTable).Where(x => x.Key == key).Select(s => s.Value).FirstOrDefault();
+            return LiteDBHelper.Instance.GetAllData<SettingsEntity<T>>(SettingsTable).Where(x => x.Key == key).Select(s => s.Value).FirstOrDefault();
         }
 
         /// <summary>
@@ -22,10 +22,10 @@ namespace BookReader.DB
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public static void Set(string key, object value)
+        public static void Set<T>(string key, T value)
         {
-            var id = LiteDBHelper.Instance.GetAllData<SettingsEntity>(SettingsTable).Where(x => x.Key == key).Select(x => x.Id).FirstOrDefault();
-            SettingsEntity se = new SettingsEntity()
+            var id = LiteDBHelper.Instance.GetAllData<SettingsEntity<T>>(SettingsTable).Where(x => x.Key == key).Select(x => x.Id).FirstOrDefault();
+            SettingsEntity<T> se = new SettingsEntity<T>()
             {
                 Id = id,
                 Key = key,
