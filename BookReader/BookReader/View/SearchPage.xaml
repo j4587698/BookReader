@@ -4,31 +4,37 @@
              xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
              xmlns:xamvvm="clr-namespace:Xamvvm;assembly=Xamvvm.Forms"
              xmlns:converter="clr-namespace:BookReader.Converter;assembly=BookReader"
+             xmlns:dltag="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.TagEntryView"
              x:Class="BookReader.View.SearchPage">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:NoRecordConverter x:Key="NoRecordConverter"></converter:NoRecordConverter>
+            <converter:ClearButtonShowConverter x:Key="ClearButtonShowConverter"></converter:ClearButtonShowConverter>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout Orientation="Vertical">
-            <StackLayout Orientation="Horizontal">
-                <iconize:IconLabel Text="fa-chevron-left" FontSize="Large" VerticalTextAlignment="Center" Margin="15, 0,15,0">
-                    <iconize:IconLabel.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding BackCommand}"></TapGestureRecognizer>
-                    </iconize:IconLabel.GestureRecognizers>
-                </iconize:IconLabel>
-                <Entry HorizontalOptions="FillAndExpand" Text="{Binding SearchText, Mode=TwoWay}">
-                    <Entry.Behaviors>
-                        <xamvvm:BaseEventToCommandBehavior EventName="TextChanged" Command="{Binding SearchTextChangedCommand}"></xamvvm:BaseEventToCommandBehavior>
-                    </Entry.Behaviors>
-                </Entry>
-                <iconize:IconLabel Text="fa-search" FontSize="Large" VerticalTextAlignment="Center" Margin="15, 0,15,0">
-                    <iconize:IconLabel.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SearchCommand}"></TapGestureRecognizer>
-                    </iconize:IconLabel.GestureRecognizers>
-                </iconize:IconLabel>
-            </StackLayout>
+            <Frame Padding="0,5,0,5" BackgroundColor="Blue">
+                <StackLayout Orientation="Horizontal">
+                    <iconize:IconLabel Text="fa-chevron-left" FontSize="Large" VerticalTextAlignment="Center" Margin="15, 0,15,0" TextColor="White">
+                        <iconize:IconLabel.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding BackCommand}"></TapGestureRecognizer>
+                        </iconize:IconLabel.GestureRecognizers>
+                    </iconize:IconLabel>
+                    <Entry HorizontalOptions="FillAndExpand" Text="{Binding SearchText, Mode=TwoWay}" BackgroundColor="White " Placeholder="搜索...">
+                        <Entry.Behaviors>
+                            <xamvvm:BaseEventToCommandBehavior EventName="Completed" Command="{Binding SearchCommand}"></xamvvm:BaseEventToCommandBehavior>
+                            <xamvvm:BaseEventToCommandBehavior EventName="TextChanged" Command="{Binding SearchTextChangedCommand}"></xamvvm:BaseEventToCommandBehavior>
+                        </Entry.Behaviors>
+                    </Entry>
+                    <iconize:IconLabel Text="fa-search" FontSize="Large" VerticalTextAlignment="Center" Margin="15, 0,15,0" TextColor="White">
+                        <iconize:IconLabel.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SearchCommand}"></TapGestureRecognizer>
+                        </iconize:IconLabel.GestureRecognizers>
+                    </iconize:IconLabel>
+                </StackLayout>
+            </Frame>
+            
             <Grid>
                 <ListView ItemsSource="{Binding SearchList}" SeparatorVisibility="None">
                     <ListView.Behaviors>
@@ -45,15 +51,32 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Grid IsVisible="{Binding SearchList, Converter={StaticResource NoRecordConverter}}">
+                <Grid IsVisible="{Binding SearchList, Converter={StaticResource NoRecordConverter}}" Margin="15,0,15,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="10*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="10*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Label Text="大家都在看" FontAttributes="Bold"></Label>
-                    <Label Text="搜索历史" FontAttributes="Bold" Grid.Row="2"></Label>
+                    <Label Text="大家都在看"></Label>
+                    <StackLayout Grid.Row="2" Orientation="Horizontal">
+                        <Label Text="搜索历史" HorizontalOptions="StartAndExpand"></Label>
+                        <Label Text="清空历史" BackgroundColor="Red" TextColor="White" HorizontalOptions="End" IsVisible="{Binding HistoryItems, Converter={StaticResource ClearButtonShowConverter}}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding ClearHistoryCommand}"></TapGestureRecognizer>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+
+                    <dltag:TagEntryView Grid.Row="3" TagItems="{Binding HistoryItems}" TagTappedCommand="{Binding HistoryTappedCommand}" x:Name="TagView">
+                        <dltag:TagEntryView.TagItemTemplate>
+                            <DataTemplate>
+                                <Frame OutlineColor="Black" Padding="10" HasShadow="False">
+                                    <Label Text="{Binding Name}"></Label>
+                                </Frame>
+                            </DataTemplate>
+                        </dltag:TagEntryView.TagItemTemplate>
+                    </dltag:TagEntryView>
                 </Grid>
             </Grid>
             

@@ -16,6 +16,8 @@ namespace BookReader.View
 		public SearchPage ()
 		{
 			InitializeComponent ();
+		    NavigationPage.SetHasNavigationBar(this, false);
+		    TagView.TagEntry.IsVisible = false;
 		}
 	}
 }
