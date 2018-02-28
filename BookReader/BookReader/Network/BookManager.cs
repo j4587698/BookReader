@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using BookReader.JsonParser;
+using BookReader.Parser;
 
 namespace BookReader.Network
 {
@@ -20,7 +20,7 @@ namespace BookReader.Network
             item.Header.Add("X-Requested-With", "XMLHttpRequest");
             HttpResult result = helper.GetHtml(item);
             string resultStr = result.Html;
-            return BookParser.ParseSearchListFromJson(resultStr);
+            return BookParser.ParseSearchList(resultStr);
         }
 
         public static void GetBookInfo()

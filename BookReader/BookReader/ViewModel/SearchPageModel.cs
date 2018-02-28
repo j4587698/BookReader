@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using BookReader.Controller;
 using BookReader.DB;
 using BookReader.Entity;
 using Xamarin.Forms;
@@ -25,7 +26,7 @@ namespace BookReader.ViewModel
                         SearchList = null;
                         return;
                     }
-                    SearchList = string.IsNullOrEmpty(textChanged.NewTextValue) ? null : new ObservableCollection<string>(BookManager.GetSearchList(textChanged.NewTextValue));
+                    SearchList = string.IsNullOrEmpty(textChanged.NewTextValue) ? null : new ObservableCollection<string>(SearchController.GetSearchList(textChanged.NewTextValue));
                 });
             });
 
