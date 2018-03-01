@@ -2,7 +2,7 @@
 
 namespace BookReader.Entity
 {
-    public class HistoryEntity : IBaseEntity
+    public class SearchHistoryEntity : IBaseEntity
     {
         public int Id { get; set; }
 

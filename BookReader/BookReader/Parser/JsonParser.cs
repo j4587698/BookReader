@@ -19,5 +19,22 @@ namespace BookReader.Parser
             var tokens = o.SelectTokens(jpath);
             return tokens.Select(x => x.ToString()).ToList();
         }
+
+        public static List<List<string>> GetList(string json, string loopJsonpath, List<string> valueJsonpaths)
+        {
+            JObject o = JObject.Parse(json);
+            var tokens = o.SelectTokens(loopJsonpath);
+            var list = new List<List<string>>();
+            foreach (var token in tokens)
+            {
+                List<string> valueList = new List<string>();
+                valueJsonpaths.ForEach(path =>
+                {
+                    valueList.Add(token.SelectToken(path).ToString());
+                });
+                list.Add(valueList);
+            }
+            return list;
+        }
     }
 }

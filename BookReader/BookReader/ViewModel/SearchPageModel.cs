@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using BookReader.Controller;
@@ -8,7 +9,6 @@ using BookReader.DB;
 using BookReader.Entity;
 using Xamarin.Forms;
 using Xamvvm;
-using BookManager = BookReader.Network.BookManager;
 
 namespace BookReader.ViewModel
 {
@@ -16,6 +16,8 @@ namespace BookReader.ViewModel
     {
         public SearchPageModel()
         {
+            HotItems = new ObservableCollection<HotSearchEntity>(SearchController.GetHotSearch( hots =>{HotItems = new ObservableCollection<HotSearchEntity>(hots);}));
+            
             BackCommand = new BaseCommand(async (args) => { await this.PopModalPageAsync(); });
             SearchTextChangedCommand = new BaseCommand((args) =>
             {
@@ -39,7 +41,7 @@ namespace BookReader.ViewModel
                 
             });
 
-            HistoryTappedCommand = new BaseCommand<HistoryEntity>(async entity =>
+            HistoryTappedCommand = new BaseCommand<SearchHistoryEntity>(async entity =>
             {
                 if (entity != null)
                 {
@@ -47,10 +49,18 @@ namespace BookReader.ViewModel
                 }   
             });
 
+            HotTappedCommand = new BaseCommand<HotSearchEntity>(async entity =>
+            {
+                if (entity != null)
+                {
+                    await NavToSearchResult(entity.Name);
+                }
+            });
+
             ClearHistoryCommand = new BaseCommand(args =>
             {
                 SearchManager.DelAllHistory();
-                HistoryItems = new ObservableCollection<HistoryEntity>();
+                HistoryItems = new ObservableCollection<SearchHistoryEntity>();
             });
 
             SearchCommand = new BaseCommand(async args =>
@@ -58,13 +68,13 @@ namespace BookReader.ViewModel
                 await NavToSearchResult(SearchText);
             });
 
-            HistoryItems = new ObservableCollection<HistoryEntity>(SearchManager.GetAllHistory());
+            HistoryItems = new ObservableCollection<SearchHistoryEntity>(SearchManager.GetAllHistory());
         }
 
         private async Task NavToSearchResult(string entityStr)
         {
             SearchManager.AddHistory(entityStr);
-            HistoryItems = new ObservableCollection<HistoryEntity>(SearchManager.GetAllHistory());
+            HistoryItems = new ObservableCollection<SearchHistoryEntity>(SearchManager.GetAllHistory());
             SearchText = "";
             await this.PushModalPageAsync(this.GetPageFromCache<SearchResultPageModel>(), x => x.Init(entityStr));
         }
@@ -111,6 +121,12 @@ namespace BookReader.ViewModel
             set => SetField(value);
         }
 
+        public ICommand HotTappedCommand
+        {
+            get => GetField<ICommand>();
+            set => SetField(value);
+        }
+
         public ObservableCollection<string> SearchList
         {
             get => GetField<ObservableCollection<string>>();
@@ -123,9 +139,15 @@ namespace BookReader.ViewModel
             set => SetField(value);
         }
 
-        public ObservableCollection<HistoryEntity> HistoryItems
+        public ObservableCollection<SearchHistoryEntity> HistoryItems
         {
-            get => GetField<ObservableCollection<HistoryEntity>>();
+            get => GetField<ObservableCollection<SearchHistoryEntity>>();
+            set => SetField(value);
+        }
+
+        public ObservableCollection<HotSearchEntity> HotItems
+        {
+            get => GetField<ObservableCollection<HotSearchEntity>>();
             set => SetField(value);
         }
     }

@@ -12,7 +12,7 @@ namespace BookReader.DB
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static object Get<T>(string key)
+        public static T Get<T>(string key)
         {
             return LiteDBHelper.Instance.GetAllData<SettingsEntity<T>>(SettingsTable).Where(x => x.Key == key).Select(s => s.Value).FirstOrDefault();
         }

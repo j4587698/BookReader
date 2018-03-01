@@ -17,7 +17,8 @@ namespace BookReader.View
 		{
 			InitializeComponent ();
 		    NavigationPage.SetHasNavigationBar(this, false);
-		    TagView.TagEntry.IsVisible = false;
+		    Hot.TagEntry.IsVisible = false;
+		    History.TagEntry.IsVisible = false;
 		}
 	}
 }
