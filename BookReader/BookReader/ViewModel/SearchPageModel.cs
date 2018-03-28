@@ -14,9 +14,13 @@ namespace BookReader.ViewModel
 {
     public class SearchPageModel : BasePageModel
     {
+
+        private readonly SearchController _searchController;
         public SearchPageModel()
         {
-            HotItems = new ObservableCollection<HotSearchEntity>(SearchController.GetHotSearch( hots =>{HotItems = new ObservableCollection<HotSearchEntity>(hots);}));
+            _searchController = new SearchController();
+
+            HotItems = new ObservableCollection<HotSearchEntity>(_searchController.GetHotSearch( hots =>{HotItems = new ObservableCollection<HotSearchEntity>(hots);}));
             
             BackCommand = new BaseCommand(async (args) => { await this.PopModalPageAsync(); });
             SearchTextChangedCommand = new BaseCommand((args) =>
@@ -28,7 +32,7 @@ namespace BookReader.ViewModel
                         SearchList = null;
                         return;
                     }
-                    SearchList = string.IsNullOrEmpty(textChanged.NewTextValue) ? null : new ObservableCollection<string>(SearchController.GetSearchList(textChanged.NewTextValue));
+                    SearchList = string.IsNullOrEmpty(textChanged.NewTextValue) ? null : new ObservableCollection<string>(_searchController.GetSearchList(textChanged.NewTextValue));
                 });
             });
 

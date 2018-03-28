@@ -1,12 +1,11 @@
 ﻿using System.Linq;
 using BookReader.Entity;
+using BookReader.Util;
 
 namespace BookReader.DB
 {
     public class SettingsManager
     {
-        private const string SettingsTable = "settings";
-
         /// <summary>
         /// 获取设置
         /// </summary>
@@ -14,7 +13,7 @@ namespace BookReader.DB
         /// <returns></returns>
         public static T Get<T>(string key)
         {
-            return LiteDBHelper.Instance.GetAllData<SettingsEntity<T>>(SettingsTable).Where(x => x.Key == key).Select(s => s.Value).FirstOrDefault();
+            return LiteDBHelper.Instance.GetAllData<SettingsEntity<T>>(Constant.SettingsTable).Where(x => x.Key == key).Select(s => s.Value).FirstOrDefault();
         }
 
         /// <summary>
@@ -24,14 +23,14 @@ namespace BookReader.DB
         /// <param name="value"></param>
         public static void Set<T>(string key, T value)
         {
-            var id = LiteDBHelper.Instance.GetAllData<SettingsEntity<T>>(SettingsTable).Where(x => x.Key == key).Select(x => x.Id).FirstOrDefault();
+            var id = LiteDBHelper.Instance.GetAllData<SettingsEntity<T>>(Constant.SettingsTable).Where(x => x.Key == key).Select(x => x.Id).FirstOrDefault();
             SettingsEntity<T> se = new SettingsEntity<T>()
             {
                 Id = id,
                 Key = key,
                 Value = value
             };
-            LiteDBHelper.Instance.InsertOrUpdate(SettingsTable, se);
+            LiteDBHelper.Instance.InsertOrUpdate(Constant.SettingsTable, se);
         }
     }
 }

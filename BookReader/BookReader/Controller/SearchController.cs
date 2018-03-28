@@ -12,7 +12,7 @@ namespace BookReader.Controller
 {
     public class SearchController
     {
-        public static List<string> GetSearchList(string key)
+        public List<string> GetSearchList(string key)
         {
             Dictionary<string, string> headers = new Dictionary<string, string>()
             {
@@ -29,7 +29,7 @@ namespace BookReader.Controller
             return null;
         }
 
-        public static IEnumerable<HotSearchEntity> GetHotSearch(Action<IEnumerable<HotSearchEntity>> updateSuccessAction)
+        public IEnumerable<HotSearchEntity> GetHotSearch(Action<IEnumerable<HotSearchEntity>> updateSuccessAction)
         {
             Task.Factory.StartNew(() =>
             {
