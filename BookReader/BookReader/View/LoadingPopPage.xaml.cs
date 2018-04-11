@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookReader.ViewModel;
+using Rg.Plugins.Popup.Pages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamvvm;
@@ -11,14 +12,11 @@ using Xamvvm;
 namespace BookReader.View
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class SearchPage : ContentPage, IBasePage<SearchPageModel>
+	public partial class LoadingPopPage : PopupPage, IBasePage<LoadingPopPageModel>
 	{
-		public SearchPage ()
+		public LoadingPopPage ()
 		{
-		    NavigationPage.SetHasNavigationBar(this, false);
-            InitializeComponent (); 
-		    Hot.TagEntry.IsVisible = false;
-		    History.TagEntry.IsVisible = false;
+			InitializeComponent ();
 		}
 	}
 }

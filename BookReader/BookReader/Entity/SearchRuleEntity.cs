@@ -1,14 +1,21 @@
 ﻿namespace BookReader.Entity
 {
-    public class SearchRuleEntity : IBaseEntity
+    public class SearchRuleEntity
     {
-        public int Id { get; set; }
-
         /// <summary>
         /// 基础地址
         /// </summary>
         public string BasePath { get; set; }
 
+        /// <summary>
+        /// URL是否需要添加网站地址:0 自动检测(判断前7为是否为http://) 1 全部添加 2 全部不添加
+        /// </summary>
+        public int NeedAddBaseUrl { get; set; }
+
+        /// <summary>
+        /// 要添加的基础地址
+        /// </summary>
+        public string BaseUrl { get; set; }
 
         /// <summary>
         /// URL的PATH
@@ -19,6 +26,11 @@
         /// 书名的Path
         /// </summary>
         public string BookNamePath { get; set; }
+
+        /// <summary>
+        /// 封面地址
+        /// </summary>
+        public string CoverUrl { get; set; }
 
         /// <summary>
         /// 简介的Path

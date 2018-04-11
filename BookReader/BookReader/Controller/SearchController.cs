@@ -14,15 +14,16 @@ namespace BookReader.Controller
     {
         public List<string> GetSearchList(string key)
         {
-            Dictionary<string, string> headers = new Dictionary<string, string>()
+            List<HeaderEntity> headers = new List<HeaderEntity>()
             {
-                {"Method", "Get"},
-                {"Referer", "http://book.km.com/"},
-                {"Host", "book.km.com"},
-                {"X-Requested-With", "XMLHttpRequest"}
+                new HeaderEntity()
+                {
+                    Key = "X-Requested-With",
+                    Value = "XMLHttpRequest"
+                }
             };
             var resuponse = HtmlManager.GetHtml(string.Format("http://book.km.com/index.php?c=search&a=thinkup&keyword={0}&atype=", key), headers);
-            if (resuponse.responseCode == HttpStatusCode.OK || !string.IsNullOrEmpty(resuponse.response) )
+            if (resuponse.responseCode == HttpStatusCode.OK && !string.IsNullOrEmpty(resuponse.response) )
             {
                 return JsonParser.GetList(resuponse.response, "$.list[*].title_def");
             }
@@ -33,25 +34,75 @@ namespace BookReader.Controller
         {
             Task.Factory.StartNew(() =>
             {
-                Dictionary<string, string> headers = new Dictionary<string, string>()
+                List<HeaderEntity> headers = new List<HeaderEntity>()
                 {
-                    {"Method", "Get"},
-                    {"Referer", "http://book.km.com/"},
-                    {"Host", "book.km.com"},
-                    {"X-Requested-With", "XMLHttpRequest"}
+                    new HeaderEntity()
+                    {
+                        Key = "X-Requested-With",
+                        Value = "XMLHttpRequest"
+                    }
                 };
                 var resuponse = HtmlManager.GetHtml("http://book.km.com/index.php?c=search&a=thinkup&keyword=&atype=", headers);
-                if (resuponse.responseCode == HttpStatusCode.OK || !string.IsNullOrEmpty(resuponse.response))
+                if (resuponse.responseCode == HttpStatusCode.OK && !string.IsNullOrEmpty(resuponse.response))
                 {
                     var hots = JsonParser.GetList(resuponse.response, "$.list[*].title_def").Select(x => new HotSearchEntity() { Name = x });
                     SearchManager.ReplaceHotSearch(hots);
                     //return hots;
                     updateSuccessAction?.Invoke(hots);
                 }
-            });
-            
-            
+            });    
             return SearchManager.GetAllHotSearch();
+        }
+
+        public List<SearchResultEntity> GetSearchResult(string key)
+        {
+            var searchrule = RuleManager.GetSearchRule(x => x.IsBasePage);
+            if (searchrule == null)
+            {
+                throw new Exception("未找到基础搜索规则");
+            }
+            searchrule.BaseUrl = String.Format(searchrule.BaseUrl, key);
+            var response = HtmlManager.GetHtml(searchrule.BaseUrl, searchrule.Headers);
+            if (response.responseCode == HttpStatusCode.OK && !string.IsNullOrEmpty(response.response))
+            {
+                List<SearchResultEntity> searchResults = new List<SearchResultEntity>();
+                foreach (SearchRuleEntity rule in searchrule.SearchRules)
+                {
+                    if (searchrule.SearchType == 0)
+                    {
+                        List<string> xpaths = new List<string>()
+                        {
+                            rule.BookNamePath,
+                            rule.CoverUrl,
+                            rule.BookUrlPath,
+                            rule.AuthorPath,
+                            rule.SummaryPath
+                        };
+                        var results = HtmlParser.GetList(response.response, rule.BasePath, xpaths);
+                        foreach (var result in results)
+                        {
+                            SearchResultEntity searchResult = new SearchResultEntity()
+                            {
+                                BookName = result[0],
+                                CoverUrl = result[1],
+                                BookUrl = result[2],
+                                Author = result[3],
+                                Summany = result[4]
+                            };
+                            if (rule.NeedAddBaseUrl == 0 && !searchResult.BookUrl.StartsWith("http"))
+                            {
+                                searchResult.BookUrl = $"{rule.BaseUrl}/{searchResult.BookUrl}";
+                            }
+                            searchResults.Add(searchResult);
+                        }
+
+                        return searchResults;
+                    }
+                    
+                }
+            }
+
+            return null;
         }
     }
 }

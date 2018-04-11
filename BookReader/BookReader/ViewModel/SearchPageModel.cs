@@ -22,7 +22,7 @@ namespace BookReader.ViewModel
 
             HotItems = new ObservableCollection<HotSearchEntity>(_searchController.GetHotSearch( hots =>{HotItems = new ObservableCollection<HotSearchEntity>(hots);}));
             
-            BackCommand = new BaseCommand(async (args) => { await this.PopModalPageAsync(); });
+            BackCommand = new BaseCommand(async (args) => { await this.PopPageAsync(); });
             SearchTextChangedCommand = new BaseCommand((args) =>
             {
                 Task.Factory.StartNew(() =>

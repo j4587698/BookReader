@@ -14,9 +14,19 @@ namespace BookReader.Entity
         public string SearchName { get; set; }
 
         /// <summary>
+        /// 是否为基础页，只有原始站可以为基础页，有且只有一个
+        /// </summary>
+        public bool IsBasePage { get; set; } = false;
+
+        /// <summary>
         /// 搜索URL
         /// </summary>
         public string BaseUrl { get; set; }
+
+        /// <summary>
+        /// 需要添加的http头
+        /// </summary>
+        public List<HeaderEntity> Headers { get; set; }
 
         /// <summary>
         /// 解析类型 0:Xpath 1:JsonPath
@@ -26,7 +36,6 @@ namespace BookReader.Entity
         /// <summary>
         /// 搜索列表
         /// </summary>
-        [BsonRef(Constant.SearchRuleTable)]
-        public List<SearchRuleEntity> SearchRules;
+        public List<SearchRuleEntity> SearchRules { get; set; }
     }
 }

@@ -17,8 +17,8 @@ namespace BookReader.ViewModel
         {
             SearchCommand = new BaseCommand(async (arg) =>
                 {
-                    //await this.PushPageAsync(this.GetPageFromCache<SearchPageModel>());
-                    await this.PushModalPageAsync(this.GetPageFromCache<SearchPageModel>());
+                    await this.PushPageAsync(this.GetPageFromCache<SearchPageModel>());
+                    //await this.PushModalPageAsync(this.GetPageFromCache<SearchPageModel>());
                 });
 
             BookInfoEntities = new ObservableCollection<BookInfoEntity>(BookManager.GetAllBookInfos());

@@ -14,6 +14,7 @@ namespace BookReader
 		public App ()
 		{
 			InitializeComponent();
+            Init.InitApp();
 		    var factory = new XamvvmFormsFactory(this);
 		    factory.RegisterNavigationPage<MainNavigationPageModel>(() => this.GetPageFromCache<MainPageModel>());
 		    XamvvmCore.SetCurrentFactory(factory);

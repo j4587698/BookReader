@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using System;
+using HtmlAgilityPack;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,12 +12,20 @@ namespace BookReader.Parser
 
         private static string GetNodeValue(string html, string xpath)
         {
-            var doc = new HtmlDocument();
-            doc.LoadHtml(html);
-            var root = doc.DocumentNode;
-            HtmlNodeNavigator navigator = (HtmlNodeNavigator) root.CreateNavigator();
-            var node = navigator.SelectSingleNode(xpath);
-            return node.Value;
+            try
+            {
+                var doc = new HtmlDocument();
+                doc.LoadHtml(html);
+                var root = doc.DocumentNode;
+                HtmlNodeNavigator navigator = (HtmlNodeNavigator)root.CreateNavigator();
+                var node = navigator.SelectSingleNode(xpath);
+                return node.Value;
+            }
+            catch
+            {
+                return "";
+            }
+            
         }
 
         public static string GetValue(string html, string xpath)

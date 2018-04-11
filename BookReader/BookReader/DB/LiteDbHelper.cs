@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
 using BookReader.Entity;
 using LiteDB;
 using Xamarin.Forms;
@@ -131,6 +134,22 @@ namespace BookReader.DB
         {
             var col = _db.GetCollection<T>(tableName);
             return col.FindById(id);
+        }
+
+        public IEnumerable<T> GetData<T>(string tableName, Expression<Func<T, bool>> predicate, int skip = 0, int limit = Int32.MaxValue) where T : IBaseEntity
+        {
+            var col = _db.GetCollection<T>(tableName);
+            return col.Find(predicate, skip, limit);
+        }
+
+        public IEnumerable<T> GetData<T>(string tableName, Expression<Func<T, bool>> predicate,int skip = 0, int limit = Int32.MaxValue, params string[] includePaths) where T : IBaseEntity
+        {
+            var col = _db.GetCollection<T>(tableName);
+            foreach (var includePath in includePaths)
+            {
+                col.Include(includePath);
+            }
+            return col.Find(predicate, skip, limit);
         }
     }
 }

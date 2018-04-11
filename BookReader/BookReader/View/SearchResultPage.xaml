@@ -3,10 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BookReader.View.SearchResultPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="{Binding SearchStr}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Orientation="Vertical">
+            <Frame Padding="0,5,0,5" BackgroundColor="Blue">
+                <Label Text="{Binding SearchStr}" TextColor="White" FontSize="Large"></Label>
+            </Frame>
+            <Grid>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

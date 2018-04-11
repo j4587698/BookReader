@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             x:Class="BookReader.View.LoadingPopPage">
+    <Frame VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="White">
+        <StackLayout Orientation="Horizontal">
+            <ActivityIndicator
+                Color="Black"
+                IsRunning="True"
+                IsEnabled="True" />
+            <Label Text="{Binding LoadingStr}" FontSize="Large"></Label>
+        </StackLayout>
+    </Frame>
+    
+</pages:PopupPage>

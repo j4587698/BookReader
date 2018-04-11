@@ -8,7 +8,7 @@ using Xamvvm;
 
 namespace BookReader.View
 {
-    class MainNavigationPage : IconNavigationPage, IBasePage<MainNavigationPageModel>
+    public class MainNavigationPage : IconNavigationPage, IBasePage<MainNavigationPageModel>
     {
         public MainNavigationPage(Page root) : base(root)
         {
