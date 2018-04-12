@@ -93,13 +93,16 @@ namespace BookReader.Controller
                             {
                                 searchResult.BookUrl = $"{rule.BaseUrl}/{searchResult.BookUrl}";
                             }
-                            searchResults.Add(searchResult);
-                        }
 
-                        return searchResults;
-                    }
-                    
+                            if (rule.NeedAddBaseUrl == 1)
+                            {
+                                searchResult.BookUrl = $"{rule.BaseUrl}/{searchResult.BookUrl}";
+                            }
+                            searchResults.Add(searchResult);
+                        } 
+                    }   
                 }
+                return searchResults;
             }
 
             return null;

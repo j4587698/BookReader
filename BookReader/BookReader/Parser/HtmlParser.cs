@@ -48,7 +48,7 @@ namespace BookReader.Parser
             doc.LoadHtml(html);
             var root = doc.DocumentNode;
             var list = new List<List<string>>();
-            root.SelectNodes(loopXpath).ForEach(node =>
+            root.SelectNodes(loopXpath)?.ForEach(node =>
             {
                 List<string> valueList = new List<string>();
                 valueXpaths.ForEach(value => valueList.Add(GetNodeValue(node.InnerHtml, value)));

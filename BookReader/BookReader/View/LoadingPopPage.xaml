@@ -9,7 +9,7 @@
                 Color="Black"
                 IsRunning="True"
                 IsEnabled="True" />
-            <Label Text="{Binding LoadingStr}" FontSize="Large"></Label>
+            <Label x:Name="LoadingMsg" FontSize="Large" VerticalTextAlignment="Center"></Label>
         </StackLayout>
     </Frame>
     

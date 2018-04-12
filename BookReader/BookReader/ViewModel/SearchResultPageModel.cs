@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BookReader.Controller;
 using BookReader.Entity;
 using BookReader.View;
+using Rg.Plugins.Popup.Services;
 using Xamvvm;
 
 namespace BookReader.ViewModel
@@ -17,17 +18,16 @@ namespace BookReader.ViewModel
             _searchController = new SearchController();
         }
 
-        public void Init(string searchStr)
+        public async Task InitAsync(string searchStr)
         {
-            SearchStr = searchStr + "-搜索结果";           
+            SearchStr = searchStr + "-搜索结果";
+            var loadingPopPage = new LoadingPopPage("正在搜索，请稍后...");
+            await PopupNavigation.Instance.PushAsync(loadingPopPage);
+            SearchResults = new ObservableCollection<SearchResultEntity>(_searchController.GetSearchResult(searchStr));
+            await PopupNavigation.Instance.RemovePageAsync(loadingPopPage);
         }
 
-        public override async void OnAppearing()
-        {
-            base.OnAppearing();
-            await this.PushModalPageAsync(this.GetPageFromCache<LoadingPopPageModel>(), x => x.Init("正在搜索，请稍后..."));
-            SearchResults = new ObservableCollection<SearchResultEntity>(_searchController.GetSearchResult(SearchStr));
-        }
+        
 
         public string SearchStr
         {

@@ -12,11 +12,17 @@ using Xamvvm;
 namespace BookReader.View
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class LoadingPopPage : PopupPage, IBasePage<LoadingPopPageModel>
+	public partial class LoadingPopPage : PopupPage
 	{
-		public LoadingPopPage ()
+		public LoadingPopPage (string loadingMsg)
 		{
-			InitializeComponent ();
+            InitializeComponent ();
+		    LoadingMsg.Text = loadingMsg;
 		}
+
+	    protected override bool OnBackButtonPressed()
+	    {
+	        return true;
+	    }
 	}
 }

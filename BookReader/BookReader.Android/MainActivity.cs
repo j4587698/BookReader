@@ -31,6 +31,18 @@ namespace BookReader.Droid
             TabLayoutResource = Resource.Layout.tabs;
             LoadApplication(new App());
         }
+
+        public override void OnBackPressed()
+        {
+            if (Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
+            {
+                // Do something if there are some pages in the `PopupStack`
+            }
+            else
+            {
+                // Do something if there are not any pages in the `PopupStack`
+            }
+        }
     }
 }
 

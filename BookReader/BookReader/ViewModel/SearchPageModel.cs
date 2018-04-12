@@ -80,7 +80,7 @@ namespace BookReader.ViewModel
             SearchManager.AddHistory(entityStr);
             HistoryItems = new ObservableCollection<SearchHistoryEntity>(SearchManager.GetAllHistory());
             SearchText = "";
-            await this.PushModalPageAsync(this.GetPageFromCache<SearchResultPageModel>(), x => x.Init(entityStr));
+            await this.PushPageAsync(this.GetPageFromCache<SearchResultPageModel>(), x => x.InitAsync(entityStr));
         }
 
         public ICommand BackCommand

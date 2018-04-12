@@ -1,13 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
              x:Class="BookReader.View.SearchResultPage">
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical">
+        <StackLayout Orientation="Vertical" VerticalOptions="Fill" HorizontalOptions="Fill">
             <Frame Padding="0,5,0,5" BackgroundColor="Blue">
-                <Label Text="{Binding SearchStr}" TextColor="White" FontSize="Large"></Label>
+                <Label Text="{Binding SearchStr}" TextColor="White" FontSize="Large" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"></Label>
             </Frame>
-            <Grid>
+            <Grid VerticalOptions="FillAndExpand">
+                <ListView x:Name="BookList" ItemsSource="{Binding SearchResults}"  SeparatorVisibility="None" RowHeight="100">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal" Margin="5">
+                                    <forms:CachedImage HeightRequest="100" WidthRequest="100" Source="{Binding CoverUrl}" LoadingPlaceholder="novel_noimg.jpg" ErrorPlaceholder="novel_noimg.jpg"/>
+                                    <StackLayout Orientation="Vertical">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding BookName}" FontAttributes="Bold"></Label>
+                                            <iconize:IconLabel FontSize="Small" Text="fa-user-circle" VerticalTextAlignment="Center"></iconize:IconLabel>
+                                            <Label Text="{Binding Author}" VerticalTextAlignment="Center" FontSize="Small"></Label>
+                                        </StackLayout>
+                                        <Label Text="{Binding Summany}"></Label>
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

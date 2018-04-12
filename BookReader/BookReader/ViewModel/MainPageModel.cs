@@ -21,20 +21,20 @@ namespace BookReader.ViewModel
                     //await this.PushModalPageAsync(this.GetPageFromCache<SearchPageModel>());
                 });
 
-            BookInfoEntities = new ObservableCollection<BookInfoEntity>(BookManager.GetAllBookInfos());
+            //BookInfoEntities = new ObservableCollection<BookInfoEntity>(BookManager.GetAllBookInfos());
             //测试数据
-            //BookInfoEntities = new ObservableCollection<BookInfoEntity>()
-            //{
-            //    new BookInfoEntity()
-            //    {
-            //        Author = "JX",
-            //        BookName = "测试图书",
-            //        ConverPath = "https://img4.km.com/bookimg/public/images/cover/c4ca/58bae2611976c.jpg",
-            //        LastChapter = "第十五章 测试章节",
-            //        LastModify = DateTime.Now,
-            //        LastReaded = "第十五章 测试章节"
-            //    }
-            //};
+            BookInfoEntities = new ObservableCollection<BookInfoEntity>()
+            {
+                new BookInfoEntity()
+                {
+                    Author = "JX",
+                    BookName = "测试图书",
+                    ConverPath = "https://img4.km.com/bookimg/public/images/cover/c4ca/58bae2611976c.jpg",
+                    LastChapter = "第十五章 测试章节",
+                    LastModify = DateTime.Now,
+                    LastReaded = "第十五章 测试章节"
+                }
+            };
         }
         public ICommand SearchCommand
         {

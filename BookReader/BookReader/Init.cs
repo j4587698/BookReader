@@ -36,12 +36,24 @@ namespace BookReader
                 {
                     BasePath = "//div[@class='book_info clearfix']",
                     BookUrlPath = "//div[@class='op clearfix']/a/@href",
+                    CoverUrl = "//div[@class='imgbox']/img/@src",
                     BaseUrl = "http://book.km.com",
                     NeedAddBaseUrl = 0,
                     BookNamePath = "//em[@class='spec']",
                     SummaryPath = "//p[@class='book_con']",
                     AuthorPath = "//p[@class='book_intr']/span[1]/a"
                 },
+                new SearchRuleEntity()
+                {
+                    BasePath = "//ul[@class='clearfix lazyload_box']/li",
+                    BookUrlPath = "//dl[@class='info']/dt/a/@href",
+                    CoverUrl = "//div[@class='imgbox']/a/img/@_src",
+                    BaseUrl = "http://book.km.com",
+                    NeedAddBaseUrl = 0,
+                    BookNamePath = "//dl[@class='info']/dt/a",
+                    SummaryPath = "//dl[@class='info']/dd[@class='desc']/text()",
+                    AuthorPath = "//dl[@class='info']/dd[1]/span"
+                }
             };
             BaseSearchRuleEntity entity = new BaseSearchRuleEntity()
             {

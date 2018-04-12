@@ -5,7 +5,7 @@ using BookReader.View;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(NavigationPage), typeof(NoActionBarRenderer))]
+//[assembly: ExportRenderer(typeof(NavigationPage), typeof(NoActionBarRenderer))]
 namespace BookReader.Droid.Renderer
 { 
     public class NoActionBarRenderer : NavigationRenderer
