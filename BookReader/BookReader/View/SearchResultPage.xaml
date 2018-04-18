@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+             xmlns:xamvvm="clr-namespace:Xamvvm;assembly=Xamvvm.Forms"
              x:Class="BookReader.View.SearchResultPage">
     <ContentPage.Content>
         <StackLayout Orientation="Vertical" VerticalOptions="Fill" HorizontalOptions="Fill">
@@ -11,6 +12,9 @@
             </Frame>
             <Grid VerticalOptions="FillAndExpand">
                 <ListView x:Name="BookList" ItemsSource="{Binding SearchResults}"  SeparatorVisibility="None" RowHeight="100">
+                    <ListView.Behaviors>
+                        <xamvvm:BaseEventToCommandBehavior EventName="ItemTapped" Command="{Binding BookListTappedCommand}"></xamvvm:BaseEventToCommandBehavior>
+                    </ListView.Behaviors>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

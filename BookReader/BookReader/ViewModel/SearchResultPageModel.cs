@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using BookReader.Controller;
 using BookReader.Entity;
 using BookReader.View;
@@ -16,6 +17,12 @@ namespace BookReader.ViewModel
         public SearchResultPageModel()
         {
             _searchController = new SearchController();
+
+            BookListTappedCommand = new BaseCommand((args) =>
+            {
+                this.PushPageAsync(this.GetPageFromCache<ReadingPageModel>());
+
+            });
         }
 
         public async Task InitAsync(string searchStr)
@@ -39,6 +46,12 @@ namespace BookReader.ViewModel
         {
             get => GetField<ObservableCollection<SearchResultEntity>>();
             set =>SetField(value);
+        }
+
+        public ICommand BookListTappedCommand
+        {
+            get => GetField<ICommand>();
+            set => SetField(value);
         }
 
     }
