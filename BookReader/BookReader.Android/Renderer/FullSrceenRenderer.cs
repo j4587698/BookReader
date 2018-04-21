@@ -2,6 +2,7 @@
 using Android.App;
 using Android.Content;
 using Android.Graphics;
+using Android.Util;
 using Android.Views;
 using BookReader.CustomeView;
 using BookReader.Droid.Renderer;
@@ -16,6 +17,24 @@ namespace BookReader.Droid.Renderer
 
         public FullSrceenRenderer(Context context) : base(context)
         {
+        }
+
+        protected override void OnElementChanged(ElementChangedEventArgs<Page> e)
+        {
+            base.OnElementChanged(e);
+            if (e.NewElement == null)
+            {
+                return;
+            }
+            if (!(Context is Activity activity) || !(e.NewElement is FullSrceenPage page))
+            {
+                return;
+            }
+
+            DisplayMetrics metrics = new DisplayMetrics();
+            activity.WindowManager.DefaultDisplay.GetRealMetrics(metrics);
+            page.ScreenHeight = metrics.HeightPixels / metrics.Density;
+            page.ScreenWidth = metrics.WidthPixels / metrics.Density;
         }
 
         protected override void OnWindowVisibilityChanged(ViewStates visibility)

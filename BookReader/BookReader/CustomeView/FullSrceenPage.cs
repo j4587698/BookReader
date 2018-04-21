@@ -25,6 +25,10 @@ namespace BookReader.CustomeView
             set => SetValue(EnterOnAppearProperty, value);
         }
 
+        public float ScreenWidth { get; set; }
+
+        public float ScreenHeight { get; set; }
+
         public static readonly BindableProperty ExitOnDisAppearProperty = BindableProperty.Create("ExitOnDisAppear", typeof(bool), typeof(FullSrceenPage), true);
 
         public bool ExitOnDisAppear

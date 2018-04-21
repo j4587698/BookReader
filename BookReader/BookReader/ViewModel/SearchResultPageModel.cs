@@ -5,6 +5,7 @@ using BookReader.Controller;
 using BookReader.Entity;
 using BookReader.View;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
 using Xamvvm;
 
 namespace BookReader.ViewModel
