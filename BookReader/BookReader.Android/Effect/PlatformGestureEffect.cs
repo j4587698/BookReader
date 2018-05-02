@@ -19,6 +19,8 @@ namespace BookReader.Droid.Effect
         private readonly InternalGestureDetector _tapDetector;
         private ICommand _tapCommand;
         private ICommand _panCommand;
+        private Action<Point> _tappedAction;
+        private Action<Gesture.PanEventArgs> _panUpdateAction;
         private DisplayMetrics _displayMetrics;
 
         private Point _panStartPoint;
@@ -30,68 +32,56 @@ namespace BookReader.Droid.Effect
             {
                 TapAction = motionEvent =>
                 {
-                    var command = _tapCommand;
-                    if (command != null)
+                    var x = motionEvent.GetX();
+                    var y = motionEvent.GetY();
+                    var point = PxToDp(new Point(x, y));
+                    _tappedAction?.Invoke(point);
+                    if (_tapCommand?.CanExecute(point) == true)
                     {
-                        var x = motionEvent.GetX();
-                        var y = motionEvent.GetY();
-                        var point = PxToDp(new Point(x, y));
-                        if (_tapCommand.CanExecute(point))
-                        {
-                            _tapCommand.Execute(point);
-                        }
+                        _tapCommand.Execute(point);
                     }
                 },
                 StartPanAction = initialDown =>
                 {
                     _panStartPoint = new Point(initialDown.GetX(), initialDown.GetY());
-                    var command = _panCommand;
-                    if (command != null)
+                    Gesture.PanEventArgs arg = new Gesture.PanEventArgs
                     {
-                        Gesture.PanEventArgs arg = new Gesture.PanEventArgs
-                        {
-                            StartPosition = PxToDp(_panStartPoint),
-                            CurrentPosition = PxToDp(_panStartPoint),
-                            StatusType = GestureStatus.Started,
-                            TotalMove = new Point(0, 0)
-                        };
-                        if (command.CanExecute(arg))
-                            command.Execute(arg);
-                    }
+                        StartPosition = PxToDp(_panStartPoint),
+                        CurrentPosition = PxToDp(_panStartPoint),
+                        StatusType = GestureStatus.Started,
+                        TotalMove = new Point(0, 0)
+                    };
+                    _panUpdateAction?.Invoke(arg);
+                    if (_panCommand?.CanExecute(arg) == true)
+                        _panCommand.Execute(arg);
                 },
                 PanAction = (currentMove) =>
                 {
-                    var command = _panCommand;
-                    if (command != null)
+                    Gesture.PanEventArgs arg = new Gesture.PanEventArgs
                     {
-                        Gesture.PanEventArgs arg = new Gesture.PanEventArgs
-                        {
-                            StartPosition = PxToDp(_panStartPoint),
-                            CurrentPosition = PxToDp(new Point(currentMove.GetX(), currentMove.GetY())),
-                            TotalMove = PxToDp(new Point(currentMove.GetX() - _panStartPoint.X,
-                                currentMove.GetY() - _panStartPoint.Y)),
-                            StatusType = GestureStatus.Running
-                        };
-                        if (command.CanExecute(arg))
-                            command.Execute(arg);
-                    }
+                        StartPosition = PxToDp(_panStartPoint),
+                        CurrentPosition = PxToDp(new Point(currentMove.GetX(), currentMove.GetY())),
+                        TotalMove = PxToDp(new Point(currentMove.GetX() - _panStartPoint.X,
+                            currentMove.GetY() - _panStartPoint.Y)),
+                        StatusType = GestureStatus.Running
+                    };
+                    _panUpdateAction?.Invoke(arg);
+                    if (_panCommand?.CanExecute(arg) == true)
+                        _panCommand.Execute(arg);
                 },
                 EndPanAction = currentMove =>
                 {
-                    var command = _panCommand;
-                    if (command != null)
+                    Gesture.PanEventArgs arg = new Gesture.PanEventArgs
                     {
-                        Gesture.PanEventArgs arg = new Gesture.PanEventArgs
-                        {
-                            StartPosition = PxToDp(_panStartPoint),
-                            CurrentPosition = PxToDp(new Point(currentMove.GetX(), currentMove.GetY())),
-                            TotalMove = PxToDp(new Point(currentMove.GetX() - _panStartPoint.X,
-                                currentMove.GetY() - _panStartPoint.Y)),
-                            StatusType = GestureStatus.Completed
-                        };
-                        if (command.CanExecute(arg))
-                            command.Execute(arg);
-                    }
+                        StartPosition = PxToDp(_panStartPoint),
+                        CurrentPosition = PxToDp(new Point(currentMove.GetX(), currentMove.GetY())),
+                        TotalMove = PxToDp(new Point(currentMove.GetX() - _panStartPoint.X,
+                            currentMove.GetY() - _panStartPoint.Y)),
+                        StatusType = GestureStatus.Completed
+                    };
+                    _panUpdateAction?.Invoke(arg);
+                    if (_panCommand?.CanExecute(arg) == true)
+                        _panCommand.Execute(arg);
                 }
             };
         }
@@ -101,6 +91,8 @@ namespace BookReader.Droid.Effect
             base.OnElementPropertyChanged(args);
             _tapCommand = Gesture.GetTapCommand(Element);
             _panCommand = Gesture.GetPanCommand(Element);
+            _tappedAction = Gesture.GetTappedAction(Element);
+            _panUpdateAction = Gesture.GetPanUpdateAction(Element);
         }
 
         protected override void OnAttached()

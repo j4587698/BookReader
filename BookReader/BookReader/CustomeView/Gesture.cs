@@ -7,6 +7,9 @@ namespace BookReader.CustomeView
 {
     public static class Gesture
     {
+
+        #region Command
+
         public static readonly BindableProperty TapCommandProperty = BindableProperty.CreateAttached("TapCommand", typeof(ICommand), typeof(Gesture), null, propertyChanged: CommandChanged);
         public static readonly BindableProperty PanCommandProperty = BindableProperty.CreateAttached("PanCommand", typeof(ICommand), typeof(Gesture), null, propertyChanged: CommandChanged);
 
@@ -29,6 +32,35 @@ namespace BookReader.CustomeView
         {
             view.SetValue(PanCommandProperty, value);
         }
+
+        #endregion
+
+        #region Action
+
+        public static readonly BindableProperty TappedProperty = BindableProperty.CreateAttached("Tapped", typeof(Action<Point>), typeof(Gesture), null, propertyChanged: CommandChanged);
+        public static readonly BindableProperty PanUpdateProperty = BindableProperty.CreateAttached("PanUpdate", typeof(Action<PanEventArgs>), typeof(Gesture), null, propertyChanged: CommandChanged);
+
+        public static Action<Point> GetTappedAction(BindableObject view)
+        {
+            return (Action<Point>)view.GetValue(TappedProperty);
+        }
+
+        public static void SetTappedAction(BindableObject view, Action<Point> value)
+        {
+            view.SetValue(TappedProperty, value);
+        }
+
+        public static Action<PanEventArgs> GetPanUpdateAction(BindableObject view)
+        {
+            return (Action<PanEventArgs>)view.GetValue(PanUpdateProperty);
+        }
+
+        public static void SetPanUpdateAction(BindableObject view, Action<PanEventArgs> value)
+        {
+            view.SetValue(PanUpdateProperty, value);
+        }
+
+        #endregion
 
         private static void GetOrCreateEffect(Xamarin.Forms.View view)
         {
