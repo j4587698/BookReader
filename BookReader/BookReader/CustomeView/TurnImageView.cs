@@ -23,13 +23,14 @@ namespace BookReader.CustomeView
 
         public IList<SKBitmap> ImageSource
         {
-            get => (IList<SKBitmap>)GetValue(ImagesProperty);
+            get => (IList<SKBitmap>) GetValue(ImagesProperty);
             set => SetValue(ImagesProperty, value);
         }
 
         private static void ImagesChange(BindableObject bindable, object oldvalue, object newvalue)
         {
-            if (!(bindable is TurnImageView view && oldvalue is IList<SKBitmap> oldList && newvalue is IList<SKBitmap> newList))
+            if (!(bindable is TurnImageView view && oldvalue is IList<SKBitmap> oldList &&
+                  newvalue is IList<SKBitmap> newList))
             {
                 return;
             }
@@ -43,16 +44,16 @@ namespace BookReader.CustomeView
 
         public TurnTypes TurnType
         {
-            get => (TurnTypes)GetValue(TurnTypeProperty);
+            get => (TurnTypes) GetValue(TurnTypeProperty);
             set => SetValue(ImagesProperty, value);
         }
 
         public static readonly BindableProperty LeftPercentProperty = BindableProperty.Create("LeftPercent",
-            typeof(int), typeof(TurnImageView), 33, validateValue:PercentValidate, propertyChanged:PercentChanged);
+            typeof(int), typeof(TurnImageView), 33, validateValue: PercentValidate, propertyChanged: PercentChanged);
 
         public int LeftPercent
         {
-            get => (int)GetValue(LeftPercentProperty);
+            get => (int) GetValue(LeftPercentProperty);
             set => SetValue(LeftPercentProperty, value);
         }
 
@@ -61,7 +62,7 @@ namespace BookReader.CustomeView
 
         public int RightPercent
         {
-            get => (int)GetValue(RightPercentProperty);
+            get => (int) GetValue(RightPercentProperty);
             set => SetValue(RightPercentProperty, value);
         }
 
@@ -70,7 +71,7 @@ namespace BookReader.CustomeView
 
         public int TopPercent
         {
-            get => (int)GetValue(TopPercentProperty);
+            get => (int) GetValue(TopPercentProperty);
             set => SetValue(TopPercentProperty, value);
         }
 
@@ -79,7 +80,7 @@ namespace BookReader.CustomeView
 
         public int ButtomPercent
         {
-            get => (int)GetValue(ButtomPercentProperty);
+            get => (int) GetValue(ButtomPercentProperty);
             set => SetValue(ButtomPercentProperty, value);
         }
 
@@ -87,14 +88,15 @@ namespace BookReader.CustomeView
         {
             if (!(bindable is TurnImageView view))
             {
-                return;;
+                return;
+                ;
             }
-            
+
         }
 
         private static bool PercentValidate(BindableObject bindable, object value)
         {
-            if (! (value is int percent))
+            if (!(value is int percent))
             {
                 return false;
             }
@@ -105,7 +107,8 @@ namespace BookReader.CustomeView
         /// <summary>
         /// The aspect property.
         /// </summary>
-        public static readonly BindableProperty AspectProperty = BindableProperty.Create(nameof(Aspect), typeof(Aspect), typeof(TurnImageView), Aspect.AspectFit);
+        public static readonly BindableProperty AspectProperty =
+            BindableProperty.Create(nameof(Aspect), typeof(Aspect), typeof(TurnImageView), Aspect.AspectFit);
 
         /// <summary>
         /// Gets or sets the aspect.
@@ -113,7 +116,7 @@ namespace BookReader.CustomeView
         /// <value>The aspect.</value>
         public Aspect Aspect
         {
-            get => (Aspect)GetValue(AspectProperty);
+            get => (Aspect) GetValue(AspectProperty);
             set => SetValue(AspectProperty, value);
         }
 
@@ -182,7 +185,7 @@ namespace BookReader.CustomeView
         protected override void OnTouch(SKTouchEventArgs e)
         {
             base.OnTouch(e);
-            
+
         }
 
         #endregion
@@ -190,13 +193,11 @@ namespace BookReader.CustomeView
     }
 
     public enum TurnTypes
-        {
-            BookTurn,
-            LandscapeLamination,
-            PortraitLamination,
-            LandscapeTranslation,
-            PortraitTranslation,
-        }
-
+    {
+        BookTurn,
+        LandscapeLamination,
+        PortraitLamination,
+        LandscapeTranslation,
+        PortraitTranslation,
     }
 }
